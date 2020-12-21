@@ -42,7 +42,6 @@ The `UUID` is the unique identifier of my hard drive.
 I restarted my Pi and ran the `sudo lsblk -o UUID,NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,MODEL` command to ensure the drive mounted properly. If you ever want to manually unmount the drive without shutting down the Pi simply type: `sudo umount /mnt/hd1`.
 
 ### Install Samba
-First I created a shared folder on my newly mounted hard drive: `mkdir /mnt/hd1/shared`
-Then checked to ensure it was created properly: ` ls /mnt/hd1`   
+First I created a shared folder on my newly mounted hard drive: `mkdir /mnt/hd1/shared`   
 
-I followed this [tutorial](
+Then, I followed this [tutorial](
