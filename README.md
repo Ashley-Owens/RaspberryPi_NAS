@@ -7,7 +7,7 @@ I just went the easy route on this and installed the OS via the Raspberry Pi Ima
 ### Booting Raspberry Pi
 I attempted to do this headless (without a monitor attached) but was unsuccessful. I finally caved and bought a little HDMI to micro HDMI adapter to debug my Pi. Apparently, at some point after installing the microSD, I unplugged the Pi without shutting it down properly. This corrupted the boot partition, which was why I couldn't SSH into it. I reformatted the microSD, installed it, and plugged the Pi into an ethernet cable. I followed the OS set-up instructions, enabled SSH (using the GUI), and the installation was successful.
 
-### Raspberry Pi Static IP for Running Headless
+### Set a Static IP for Running Headless
 I followed this [tutorial](https://pimylifeup.com/raspberry-pi-static-ip-address/) to set my local static IP. I tried a few different IP addresses, apparently my router only allows IP's in the range of 192.168.0.2-254. Initially, I tried an IP address outside of this range, 192.168.1.68, but when I checked my router it had assigned 192.168.0.68 to my Pi, which was why I couldn't SSH into it. I changed the IP to begin with 192.168.0.x and the static IP finally persisted.
 
 ### SSH into Pi
@@ -32,11 +32,10 @@ Then I added this line at the bottom of the file:
 The `UUID` is the unique identifier of my hard drive.  
 `/mnt/hd1` is the location where I mounted the drive and where it should persist.         
 `exfat` is the file system type.   
-`uid=1000,gid=1000` gives the user `pi` permission to make changes to the drive.   
+`uid=1000,gid=1000` gives the user `pi` permission to make changes to the drive files.   
 `rw` allows users read and write access.   
-`nofail` and the subsequent code allows the Pi to continue booting without error after only waiting 30 seconds if the drive is unattached.   
+`nofail` and the subsequent code allows the Pi to continue booting without error after only waiting 30 seconds if the drive is detached.   
 
 I restarted my Pi and ran the `sudo lsblk -o UUID,NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,MODEL` command to ensure the drive mounted properly. If you ever want to manually unmount the drive without shutting down the Pi simply type: `sudo umount /mnt/hd1`.
 
 ### Set Up Samba
-
