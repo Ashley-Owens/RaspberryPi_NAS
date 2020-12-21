@@ -5,7 +5,10 @@ How I set up my home server (in case I forget!) using a Raspberry Pi 4, an exter
 I just went the easy route on this and installed the OS via the Raspberry Pi Imager found on the [Raspberry Pi website](https://www.raspberrypi.org/software/). Download the installation software to your mac, plug in a microSD card, and follow the instructions. 
 
 ### Boot Raspberry Pi
-I attempted to do this headless (without a monitor attached) but was unsuccessful. I finally caved and bought a little HDMI to micro HDMI adapter to debug my Pi. Apparently, at some point after installing the microSD, I unplugged the Pi without shutting it down properly. This corrupted the boot partition, which was why I couldn't SSH into it. I reformatted the microSD, installed it, and plugged the Pi into an ethernet cable. I followed the OS set-up instructions, enabled SSH (using the GUI), and the installation was successful.
+I attempted to do this headless (without a monitor attached) but was unsuccessful. I finally caved and bought a little HDMI to micro HDMI adapter to debug my Pi. Apparently, at some point after installing the microSD, I unplugged the Pi without shutting it down properly. This corrupted the boot partition, which was why I couldn't SSH into it. I reformatted the microSD, installed it, and plugged the Pi into an ethernet cable. I followed the OS set-up instructions, enabled SSH (using the GUI), and the installation was successful.    
+
+To properly shut down the Pi type: `sudo shutdown`    
+To properly restart the Pi type: `sudo reboot`   
 
 ### Set a Static IP for Running Headless
 I followed this [tutorial](https://pimylifeup.com/raspberry-pi-static-ip-address/) to set my local static IP. I tried a few different IP addresses, apparently my router only allows IP's in the range of 192.168.0.2-254. Initially, I tried an IP address outside of this range, 192.168.1.68, but when I checked my router it had assigned 192.168.0.68 to my Pi, which was why I couldn't SSH into it. I changed the IP to begin with 192.168.0.x and the static IP finally persisted.
