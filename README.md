@@ -39,9 +39,20 @@ The `UUID` is the unique identifier of my hard drive.
 `rw` allows users read and write access.   
 `nofail` and the subsequent code allows the Pi to continue booting without error after only waiting 30 seconds if the drive is detached.   
 
-I restarted my Pi and ran the `sudo lsblk -o UUID,NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,MODEL` command to ensure the drive mounted properly. If you ever want to manually unmount the drive without shutting down the Pi simply type: `sudo umount /mnt/hd1`.
+I restarted my Pi and ran the `sudo lsblk -o UUID,NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,MODEL` command to ensure the drive mounted properly.   
+If you ever want to manually unmount the drive without shutting down the Pi simply type: `sudo umount /mnt/hd1`.
 
 ### Install Samba
-First I created a shared folder on my newly mounted hard drive: `mkdir /mnt/hd1/shared`   
+First I created a shared folder on my newly mounted hard drive: `mkdir /mnt/hd1/shared`. Then, I followed this [tutorial](https://pimylifeup.com/raspberry-pi-samba/). While installing Samba, you will be prompted “Modify smb.conf to use WINS from DHCP?” Press “Enter” to select “No.” I wasn't too sure about this but a couple of websites mentioned most home users won't need this setting.    
 
-Then, I followed this [tutorial](
+I configured my smb.conf file to give users read/write permissions like this:
+`[share]
+   path=/mnt/hd1/shared
+   writeable=yes
+   read only=no
+   create mask=0777
+   directory mask=0777
+   public=no`   
+   
+### Connect to the Samba share on Mac
+With the “Finder” application open, click the “Go” button in the toolbar, then click the “Connect to Server...” option. Within the address box enter in the details of your Raspberry Pi’s SMB share. In my case: `smb://192.168.0.x/share`. Click connect and then enter your Samba username and password. This will successfully set up a network drive that you can be accessed on both a Windows PC and a Mac computer.
