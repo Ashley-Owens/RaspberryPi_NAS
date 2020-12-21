@@ -1,10 +1,10 @@
 # RaspberryPi_NAS
 How I set up my home server (in case I forget!) using a Raspberry Pi 4, an external hard drive, Samba, and MAC OS.
 
-### Setting up Raspberry Pi OS
+### Install Raspberry Pi OS
 I just went the easy route on this and installed the OS via the Raspberry Pi Imager found on the [Raspberry Pi website](https://www.raspberrypi.org/software/). Download the installation software to your mac, plug in a microSD card, and follow the instructions. 
 
-### Booting Raspberry Pi
+### Boot Raspberry Pi
 I attempted to do this headless (without a monitor attached) but was unsuccessful. I finally caved and bought a little HDMI to micro HDMI adapter to debug my Pi. Apparently, at some point after installing the microSD, I unplugged the Pi without shutting it down properly. This corrupted the boot partition, which was why I couldn't SSH into it. I reformatted the microSD, installed it, and plugged the Pi into an ethernet cable. I followed the OS set-up instructions, enabled SSH (using the GUI), and the installation was successful.
 
 ### Set a Static IP for Running Headless
@@ -38,4 +38,4 @@ The `UUID` is the unique identifier of my hard drive.
 
 I restarted my Pi and ran the `sudo lsblk -o UUID,NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,MODEL` command to ensure the drive mounted properly. If you ever want to manually unmount the drive without shutting down the Pi simply type: `sudo umount /mnt/hd1`.
 
-### Set Up Samba
+### Install Samba
