@@ -22,7 +22,7 @@ I plugged an old Mac hard drive into my Pi using a powered USB hub and ran the c
          
 The FSTYPE of my drive was hfs+. This is a Mac specific file system type which will work on the Raspberry Pi but I couldn't find much documentation on it. The only other file type that is compatible for both read and write between Mac and Pi (Linux) is exFAT. The drive wasn't mounted yet so I unplugged it and reformatted it using my Mac. I changed the file type to exFAT, which also wiped the drive. I plugged it back into the Pi, ran the command again, and now the FSTYPE was listed as `exfat`. This command also informs you of the drive name on the Pi, in my case, `sda2` (important for mounting).   
 
-### Mount the Hard Drive
+### Permanently Mount a Hard Drive with Permissions
 As exFAT isn't native to Pi, it needs a package to support the file system format. I followed two tutorials. From this [tutorial](https://pimylifeup.com/raspberry-pi-exfat/), I only used step two for mounting the drive. I predominantly followed the [Raspberry Pi docs](https://www.raspberrypi.org/documentation/configuration/external-storage.md) for everything else. In order for the drive to automatically mount every time it's plugged in (or the Pi is restarted), I made the following changes to the fstab file (this just has some minor alterations from the tutorials). To edit the file, type:     
 `sudo nano /etc/fstab`   
 
