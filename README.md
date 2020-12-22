@@ -12,10 +12,10 @@ To properly restart the Pi: `sudo reboot`
 
 ### Set a Static IP for Running Headless
 I followed this [tutorial](https://pimylifeup.com/raspberry-pi-static-ip-address/) to set a local static IP. Initially, I tried an arbitrary IP address, 192.168.1.68, but my router reassigned it to 192.168.0.68. Apparently, my router only allows certain range of addresses. Thus, I changed the IP to begin with 192.168.0.x  (where x is in the range of 2-254) and the static IP finally persisted. I added this code to the end of my dhcpcd.conf file:    
-`interface eth0     
-static ip_address=192.168.0.x/24   
-static routers=192.168.0.1     
-static domain_name_servers=68.105.28.11 68.105.29.11 68.105.28.12`    
+`interface eth0`            
+`static ip_address=192.168.0.x/24`          
+`static routers=192.168.0.1`            
+`static domain_name_servers=68.105.28.11 68.105.29.11 68.105.28.12`    
 
 ### SSH into Pi
 This was an exciting moment. After all my troubles with installation, I ran this command on my Mac terminal and it finally worked!    
