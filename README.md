@@ -1,5 +1,5 @@
 # RaspberryPi_NAS
-How I set up my home server (in case I forget!) using a Raspberry Pi 4, an external hard drive, Samba, and MAC OS.
+How I set up my home server using a Raspberry Pi 4, an external hard drive, Samba, Plex and MAC OS.
 
 ### Install Raspberry Pi OS
 I just went the easy route on this and installed the OS via the Raspberry Pi Imager found on the [Raspberry Pi website](https://www.raspberrypi.org/software/). Download the installation software to your mac, plug in a microSD card, and follow the instructions. 
@@ -11,7 +11,11 @@ To properly shut down the Pi: `sudo shutdown`
 To properly restart the Pi: `sudo reboot`   
 
 ### Set a Static IP for Running Headless
-I followed this [tutorial](https://pimylifeup.com/raspberry-pi-static-ip-address/) to set my local static IP. I tried a few different IP addresses, apparently my router only allows IP's in the range of 192.168.0.2-254. Initially, I tried an IP address outside of this range, 192.168.1.68, but when I checked my router it had assigned 192.168.0.68 to my Pi, which was why I couldn't SSH into it. I changed the IP to begin with 192.168.0.x and the static IP finally persisted.
+I followed this [tutorial](https://pimylifeup.com/raspberry-pi-static-ip-address/) to set a local static IP. Initially, I tried an arbitrary IP address, 192.168.1.68, but my router reassigned it to 192.168.0.68. Apparently, my router only allows certain range of addresses. Thus, I changed the IP to begin with 192.168.0.x  (where x is in the range of 2-254) and the static IP finally persisted. I added this code to the end of my dhcpcd.conf file:    
+`interface eth0     
+static ip_address=192.168.0.x/24   
+static routers=192.168.0.1     
+static domain_name_servers=68.105.28.11 68.105.29.11 68.105.28.12`    
 
 ### SSH into Pi
 This was an exciting moment. After all my troubles with installation, I ran this command on my Mac terminal and it finally worked!    
@@ -26,7 +30,7 @@ I plugged an old Mac hard drive into my Pi using a powered USB hub and ran the c
 The FSTYPE of my drive was hfs+. This is a Mac specific file system type which will work on the Raspberry Pi but I couldn't find much documentation on it. The only other file type that is compatible for both read and write between Mac and Pi (Linux) is exFAT. The drive wasn't mounted yet so I unplugged it and reformatted it using my Mac. I changed the file type to exFAT, which also wiped the drive. I plugged it back into the Pi, ran the command again, and now the FSTYPE was listed as `exfat`. This command also informs you of the drive name on the Pi, in my case, `sda2` (important for mounting).   
 
 ### Permanently Mount a Hard Drive with Permissions
-As exFAT isn't native to Pi, it needs a package to support the file system format. I followed two tutorials. From this [tutorial](https://pimylifeup.com/raspberry-pi-exfat/), I only used step two for mounting the drive. I predominantly followed the [Raspberry Pi docs](https://www.raspberrypi.org/documentation/configuration/external-storage.md) for everything else. In order for the drive to automatically mount every time it's plugged in (or the Pi is restarted), I made the following changes to the fstab file (this just has some minor alterations from the tutorials). To edit the file, type:     
+As exFAT isn't native to Pi, it needs a package to support the exFAT file system format. I followed two tutorials. From this [tutorial](https://pimylifeup.com/raspberry-pi-exfat/), I only used step two for mounting the drive. I predominantly followed the [Raspberry Pi docs](https://www.raspberrypi.org/documentation/configuration/external-storage.md) for everything else. In order for the drive to automatically mount every time it's plugged in (or the Pi is restarted), I made the following changes to the fstab file (this just has some minor alterations from the tutorials). To edit the file, type:     
 `sudo nano /etc/fstab`   
 
 Then I added this line at the bottom of the file:   
@@ -45,14 +49,14 @@ If you ever want to manually unmount the drive without shutting down the Pi simp
 ### Install Samba
 First I created a shared folder on my newly mounted hard drive: `mkdir /mnt/hd1/shared`. Then, I followed this [tutorial](https://pimylifeup.com/raspberry-pi-samba/). While installing Samba, you will be prompted “Modify smb.conf to use WINS from DHCP?” Press “Enter” to select “No.” I wasn't too sure about this but a couple of websites mentioned most home users won't need this setting.    
 
-I configured my smb.conf file to give users read/write permissions like this:
-`[share]
-   path=/mnt/hd1/shared
-   writeable=yes
-   read only=no
-   create mask=0777
-   directory mask=0777
-   public=no`   
-   
+I configured my smb.conf file to give users read/write permissions like this:       
+`[share]`       
+   `path=/mnt/hd1/shared`             
+   `writeable=yes`             
+   `read only=no`             
+   `create mask=0777`              
+   `directory mask=0777`             
+   `public=no`      
+    
 ### Connect to the Samba share on Mac
-With the “Finder” application open, click the “Go” button in the toolbar, then click the “Connect to Server...” option. Within the address box enter in the details of your Raspberry Pi’s SMB share. In my case: `smb://192.168.0.x/share`. Click connect and then enter your Samba username and password. This will successfully set up a network drive that you can be accessed on both a Windows PC and a Mac computer.
+With the “Finder” application open, click the “Go” button in the toolbar, then click the “Connect to Server...” option. Within the address box enter in the details of your Raspberry Pi’s SMB share. In my case: `smb://192.168.0.x/share`. Click connect and then enter your Samba username and password. This will successfully set up a network drive that can be accessed on both a Windows PC and a Mac computer.
