@@ -65,3 +65,7 @@ With the “Finder” application open, click the “Go” button in the toolbar
 ### Install Plex
 I just followed this [tutorial](https://pimylifeup.com/raspberry-pi-plex-server/) to install Plex on Raspberry Pi. Then I pasted the following into my browser to log in: `192.168.0.x:32400/web/`  
 I simply signed in and directed Plex to my server's external hard drive media location. I did get some errors but I typed `sudo apt-get update` in my Pi terminal and that fixed it. Now I can stream my media from any Plex app!
+
+
+### Server Speed
+My server is running a little slow. This could be due to my use of HDD instead of SSD drives. I followed this [tutorial] to install `iperf3` to test the speed between my network devices. With my Pi running as the server, I'm getting anywhere from 10 to 35 MB/sec. This is fairly slow for a Pi NAS, where good speeds are 75-100 MB/sec. I'm going to upgrade my cables and drives, then recheck speeds.
