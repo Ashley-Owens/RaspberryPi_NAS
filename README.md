@@ -60,3 +60,8 @@ I configured my smb.conf file to give users read/write permissions like this:
     
 ### Connect to the Samba share on Mac
 With the “Finder” application open, click the “Go” button in the toolbar, then click the “Connect to Server...” option. Within the address box enter in the details of your Raspberry Pi’s SMB share. In my case: `smb://192.168.0.x/share`. Click connect and then enter your Samba username and password. This will successfully set up a network drive that can be accessed on both a Windows PC and a Mac computer.
+
+
+### Install Plex
+I just followed this [tutorial](https://pimylifeup.com/raspberry-pi-plex-server/) to install Plex on Raspberry Pi. Then I pasted the following into my browser to log in: `192.168.0.x:32400/web/`  
+I simply signed in and directed Plex to my server's external hard drive media location. I did get some errors but I typed `sudo apt-get update` in my Pi terminal and that fixed it. Now I can stream my media from any Plex app!
