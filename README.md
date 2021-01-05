@@ -1,5 +1,5 @@
 # RaspberryPi_NAS
-Resources I used to create a home server using a Raspberry Pi 4, an external hard drive, Samba, Plex and MAC OS.
+Resources I used to create a home server using a Raspberry Pi 4, an external hard drive, Samba, Plex, and MAC OS.
 
 ### Install Raspberry Pi OS
 I just went the easy route on this and installed the OS via the Raspberry Pi Imager found on the [Raspberry Pi website](https://www.raspberrypi.org/software/). Download the installation software to your mac, plug in a microSD card, and follow the instructions. 
@@ -72,7 +72,7 @@ I created another folder on the hard drive for storing backups `mkdir /mnt/hd1/b
    `create mask=0777`              
    `directory mask=0777`             
    `public=no`      
-   `vfs objects = catia fruit streams_xattr`
+   `vfs objects = catia fruit streams_xattr`     
    `fruit:time machine = yes`    
 
 Next, in Mac System Preferences, I selected `backups` as my backup disk on RASPBERRYPI.local. I followed the prompts and signed in with my username and password. This resulted in an error that I did not have permission to write or append to the drive. I entered this command to change permissions on the server: `sudo sudo chmod -R 777 /mnt/hd1`. Finally, my Mac backups are now automated using Time Machine.    
