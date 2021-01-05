@@ -84,4 +84,7 @@ I simply signed in and directed Plex to my server's external hard drive media lo
 
 
 ### Server Speed
-My server is running a little slow. This could be due to my use of HDD instead of SSD drives. I followed this [tutorial] to install `iperf3` to test the speed between my network devices. With my Pi running as the server, I'm getting anywhere from 10 to 35 MB/sec. This is fairly slow for a Pi NAS, where good speeds are 75-100 MB/sec. I'm going to upgrade my cables and drives, then recheck speeds.
+My server speed seems slow so I installed `iperf3` to test the speed between my network devices. Initial testing revealed an inconsistent range of transfer speeds, anywhere from 10 to 35 MB/sec. This is very slow for a Pi NAS, where good speeds are 75-100 MB/sec. After switching from exFAT to hfs+ file system and upgrading to a CAT6 ethernet cable, the speed test averages hovered right around 25 MB/sec. While this is still slow, there was much less variability between tests. I might be able to increase speeds with a SSD instead of HDD, but I'm okay with the current rate for my simple purposes.    
+        
+While ssh'd into the pi enter the command `iperf3 -s`.     
+In a Mac terminal enter the command `iperf3 -c 192.168.0.44` using the IP address of the server. This can also be tested in reverse using your computer as the server. To get your Mac IP address type the command `ipconfig getifaddr en0` and reverse the client and server commands. 
